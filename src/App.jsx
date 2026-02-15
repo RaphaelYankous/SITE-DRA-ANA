@@ -158,8 +158,8 @@ const App = () => {
           <div className="max-w-sm space-y-6">
             <img src={Logo} alt="Logo" className="h-20 w-20 rounded-full border border-[#C5A059]/20 shadow-lg" />
             <p className="text-slate-500 text-sm italic font-light leading-relaxed">
-              Dra. Ana Flávia Ribeiro | CRM MG 000000 <br />
-              Psiquiatria humanizada pautada na ciência e no acolhimento.
+              Dra. Ana Flávia Ribeiro | CRM MG 104082 <br />
+              Acompanhamento focado em saúde mental, pautado na ciência e no acolhimento.
             </p>
           </div>
           <div className="space-y-6">
