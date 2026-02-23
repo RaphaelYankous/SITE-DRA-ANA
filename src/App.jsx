@@ -81,9 +81,6 @@ const App = () => {
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-8 order-1 lg:order-2">
             <h2 className="text-4xl lg:text-5xl font-serif text-slate-900 leading-tight border-b-2 border-[#C5A059] inline-block pb-2">Dra. Ana Flávia Ribeiro</h2>
-            <p className="text-lg text-slate-600 leading-relaxed italic border-l-2 border-[#C5A059] pl-6 font-light">
-              "Atuo no suporte médico à saúde mental, centrada no acolhimento integral e na escuta sensível."
-            </p>
            <p className="text-lg text-slate-600 leading-relaxed italic border-l-2 border-[#C5A059] pl-6 font-light">
               "Sou Médica generalista, com pós-graduação em Psiquiatria em andamento dedicada à saúde mental, centrada no acolhimento integral, escuta empática e acompanhamento contínuo."
             </p>
@@ -179,8 +176,8 @@ const App = () => {
 const Feature = ({ title, text }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="space-y-6">
     <div className="h-1 w-12 bg-[#C5A059] mx-auto md:mx-0" />
-    <h3 className="text-xl font-serif text-slate-900 leading-tight">{title}</h3>
-    <p className="text-sm text-slate-500 font-light leading-relaxed italic">{text}</p>
+    <h3 className="text-2xl font-serif text-slate-900 leading-tight">{title}</h3>
+    <p className="text-2xl text-slate-500 font-light leading-relaxed italic">{text}</p>
   </motion.div>
 );
 
