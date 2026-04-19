@@ -1,3 +1,33 @@
 #root {
   width: 100%;
 }
+
+.mesh-bg {
+  background-color: #F7FBF9;
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(158, 40%, 92%, 1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(40, 45%, 90%, 1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(158, 40%, 96%, 1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(0, 0%, 100%, 1) 0px, transparent 50%);
+  background-size: 200% 200%;
+  animation: mesh-anim 20s ease-in-out infinite;
+}
+
+@keyframes mesh-anim {
+  0% { background-position: 0% 0%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+  display: flex;
+  white-space: nowrap;
+}
