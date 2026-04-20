@@ -2,32 +2,88 @@
   width: 100%;
 }
 
-.mesh-bg {
-  background-color: #F7FBF9;
-  background-image: 
-    radial-gradient(at 0% 0%, hsla(158, 40%, 92%, 1) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(40, 45%, 90%, 1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(158, 40%, 96%, 1) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, hsla(0, 0%, 100%, 1) 0px, transparent 50%);
-  background-size: 200% 200%;
-  animation: mesh-anim 20s ease-in-out infinite;
+.font-serif {
+  font-family: 'Lora', serif;
 }
 
-@keyframes mesh-anim {
-  0% { background-position: 0% 0%; }
-  25% { background-position: 100% 0%; }
-  50% { background-position: 100% 100%; }
-  75% { background-position: 0% 100%; }
-  100% { background-position: 0% 0%; }
+.font-sans {
+  font-family: 'Inter', sans-serif;
 }
 
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+.bg-sand {
+  background-color: #F7F4EF; /* Um tom um pouco mais creme e quente do que o anterior */
 }
 
-.animate-marquee {
-  animation: marquee 30s linear infinite;
-  display: flex;
-  white-space: nowrap;
+.bg-warm {
+  background-color: #EADDCB; /* Bege mais forte e acolhedor */
+}
+
+.bg-sage-light {
+  background-color: #E2E8E4; /* Verde sálvia bem clarinho */
+}
+
+.bg-sage {
+  background-color: #6B7A6F; /* Verde Sálvia médio */
+}
+
+.bg-sage-dark {
+  background-color: #38453C; /* Verde Sálvia bem escuro e sofisticado */
+}
+
+.text-charcoal {
+  color: #2C2A29;
+}
+
+.text-sage {
+  color: #6B7A6F;
+}
+
+.text-sage-dark {
+  color: #38453C;
+}
+
+.text-sand {
+  color: #F7F4EF;
+}
+
+.text-warm {
+  color: #EADDCB;
+}
+
+.text-champagne {
+  color: #C8B8A6;
+}
+
+/* O noise-overlay agora é muito mais sutil, quase invisível, só para dar textura de papel */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Animações sutis e elegantes */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Transições suaves de Accordion */
+.accordion-content {
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out;
 }
