@@ -86,7 +86,7 @@ const App = () => {
         <motion.div style={{ y: heroY, opacity: heroOpacity }} className="container mx-auto px-6 relative z-10 flex flex-col items-center text-center max-w-4xl pt-20">
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="inline-flex items-center gap-3 border border-sage/20 rounded-full px-5 py-2 mb-8 backdrop-blur-md bg-white/40 shadow-sm">
-            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-sage-dark">Psiquiatria · CRM MG 104082</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-sage-dark">Medicina · CRM MG 104082</span>
           </motion.div>
 
           <motion.h1
