@@ -7,8 +7,6 @@ export const CursorGlow = () => {
   const [hovering, setHovering] = useState(false);
   const x = useMotionValue(-200);
   const y = useMotionValue(-200);
-  const glowX = useSpring(x, { stiffness: 60, damping: 20, mass: 0.6 });
-  const glowY = useSpring(y, { stiffness: 60, damping: 20, mass: 0.6 });
   const ringX = useSpring(x, { stiffness: 400, damping: 30 });
   const ringY = useSpring(y, { stiffness: 400, damping: 30 });
 
@@ -27,11 +25,6 @@ export const CursorGlow = () => {
 
   return (
     <>
-      <motion.div
-        aria-hidden="true"
-        style={{ x: glowX, y: glowY }}
-        className="pointer-events-none fixed left-0 top-0 z-[5] -ml-[260px] -mt-[260px] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(220,197,144,0.38)_0%,transparent_65%)]"
-      />
       <motion.div
         aria-hidden="true"
         style={{ x: ringX, y: ringY }}

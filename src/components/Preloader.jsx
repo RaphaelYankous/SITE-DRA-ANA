@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Logo from '../assets/84f47818-c213-4df3-a772-571c6b4f176c.jfif';
+import Logo from '../assets/logo.webp';
 
 const NAME = 'Dra. Ana Flávia Ribeiro';
 export const INTRO_MS = 2300;

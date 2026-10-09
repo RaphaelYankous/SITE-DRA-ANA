@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+import { motion, AnimatePresence, MotionConfig, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { FloatingButtons } from './components/FloatingButtons';
 import { Preloader, INTRO_MS } from './components/Preloader';
 import { CursorGlow } from './components/CursorGlow';
@@ -9,14 +9,16 @@ import { BreathingField } from './components/BreathingField';
 import { HorizontalAreas } from './components/HorizontalAreas';
 import { ThreadSteps } from './components/DrawPath';
 import { Gallery } from './components/Gallery';
+import { CheckIn } from './components/CheckIn';
 import { ImageReveal } from './components/ImageReveal';
 
-import Logo from './assets/84f47818-c213-4df3-a772-571c6b4f176c.jfif';
+import { SITE, WHATSAPP, FAQ, SIGNS } from './data/site';
+
+import Logo from './assets/logo.webp';
 import RetratoImg from './assets/ana-retrato.webp';
 import SobreImg from './assets/ana-sobre.webp';
 import OnlineImg from './assets/ana-online.webp';
 
-const WHATSAPP = `https://wa.me/553199442774?text=${encodeURIComponent('Olá, Dra. Ana! Gostaria de agendar uma consulta.')}`;
 const ease = [0.22, 1, 0.36, 1];
 
 // ── Helpers ───────────────────────────────────────────
@@ -51,6 +53,7 @@ const CTA = ({ children, href = WHATSAPP, variant = 'solid', className = '' }) =
   const styles = {
     solid: 'bg-deep text-cream hover:bg-gold shadow-[0_12px_30px_-12px_rgba(31,46,39,0.5)]',
     ghost: 'border border-deep/25 text-deep hover:border-deep hover:bg-deep/5',
+    light: 'bg-cream text-deep hover:bg-gold hover:text-cream',
   };
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -105,7 +108,7 @@ const ScrollRing = () => {
           <circle cx="28" cy="28" r="25" fill="none" stroke="rgba(31,46,39,0.12)" strokeWidth="1.5" />
           <motion.circle cx="28" cy="28" r="25" fill="none" stroke="#B8924A" strokeWidth="2" strokeLinecap="round" style={{ pathLength }} />
         </svg>
-        <span style={{ '--s0': 0.7, '--s1': 1.15, '--o0': 0.5, '--o1': 1 }} className="orb-pulse h-3 w-3 rounded-full bg-gold" />
+        <span style={{ '--s0': 0.7, '--s1': 1.15 }} className="orb-pulse h-3 w-3 rounded-full bg-gold" />
       </div>
     </div>
   );
@@ -144,15 +147,33 @@ const MobileBar = () => {
 
 const links = [
   { label: 'Sobre', href: '#sobre' },
+  { label: 'Sinais', href: '#sinais' },
   { label: 'Atuação', href: '#atuacao' },
   { label: 'Método', href: '#metodologia' },
   { label: 'Online', href: '#online' },
   { label: 'Dúvidas', href: '#duvidas' },
 ];
 
+// Descobre qual seção está na faixa central da tela, para destacar o link do menu.
+const SECTION_IDS = links.map((l) => l.href.slice(1));
+
+const useActiveSection = (ids) => {
+  const [active, setActive] = useState('');
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    ids.forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el); });
+    return () => io.disconnect();
+  }, [ids]);
+  return active;
+};
+
 const FloatingNav = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const active = useActiveSection(SECTION_IDS);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -177,14 +198,20 @@ const FloatingNav = () => {
           }`}
         >
           <a href="#top" className="flex items-center gap-3">
-            <img src={Logo} alt="Logo Dra. Ana Flávia" className="w-9 h-9 rounded-full object-cover ring-1 ring-gold/50" />
+            <img src={Logo} alt="" width="36" height="36" className="w-9 h-9 rounded-full object-cover ring-1 ring-gold/50" />
             <span className="font-display text-xl font-medium text-deep tracking-wide">Dra. Ana Flávia</span>
           </a>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav aria-label="Principal" className="hidden md:flex items-center gap-7">
             {links.map((l) => (
-              <a key={l.href} href={l.href} className="text-[11px] uppercase tracking-[0.22em] text-deep/60 hover:text-gold transition-colors duration-300">
+              <a
+                key={l.href}
+                href={l.href}
+                aria-current={active === l.href.slice(1) ? 'true' : undefined}
+                className={`relative text-[11px] uppercase tracking-[0.22em] transition-colors duration-300 hover:text-gold ${active === l.href.slice(1) ? 'text-deep' : 'text-deep/55'}`}
+              >
                 {l.label}
+                <span className={`absolute -bottom-1.5 left-0 h-px w-full origin-left bg-gold transition-transform duration-500 ${active === l.href.slice(1) ? 'scale-x-100' : 'scale-x-0'}`} />
               </a>
             ))}
           </nav>
@@ -240,18 +267,20 @@ const FloatingNav = () => {
 
 // ── Accordion (FAQ) ───────────────────────────────────
 
-const Accordion = ({ title, children }) => {
+const Accordion = ({ id, title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="border-b border-deep/12">
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
+        aria-controls={`faq-${id}`}
+        id={`faq-btn-${id}`}
         className="group w-full py-7 md:py-9 flex items-center gap-5 md:gap-10 text-left"
       >
-        <span className="font-display text-2xl md:text-4xl flex-1 text-deep group-hover:text-gold transition-colors duration-500">
+        <h3 className="font-display text-2xl md:text-4xl flex-1 text-deep group-hover:text-gold transition-colors duration-500">
           {title}
-        </span>
+        </h3>
         <span className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${isOpen ? 'bg-deep border-deep' : 'border-deep/25 group-hover:border-gold'}`}>
           <span className={`absolute h-px w-4 ${isOpen ? 'bg-cream' : 'bg-deep'}`} />
           <span className={`absolute h-4 w-px bg-deep transition-transform duration-500 ${isOpen ? 'scale-y-0' : ''}`} />
@@ -260,6 +289,9 @@ const Accordion = ({ title, children }) => {
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
+            id={`faq-${id}`}
+            role="region"
+            aria-labelledby={`faq-btn-${id}`}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -309,17 +341,17 @@ const App = () => {
   const onHeroLeave = () => { tiltX.set(0); tiltY.set(0); };
 
   return (
+    <MotionConfig reducedMotion="user">
     <div id="top" className="relative min-h-screen text-deep font-sans overflow-x-clip">
       {intro && <Preloader />}
       <BreathingField />
       <ScrollRing />
       <CursorGlow />
-      <div className="grain" />
       <FloatingButtons />
       <MobileBar />
       <FloatingNav />
 
-      <main className="relative z-10">
+      <main id="conteudo" className="relative z-10">
         {/* 1. HERO */}
         <section ref={heroRef} onMouseMove={onHeroMove} onMouseLeave={onHeroLeave} className="relative">
           <div className="relative mx-auto max-w-6xl px-6 pt-32 md:pt-36 pb-20 md:pb-28 grid lg:grid-cols-12 gap-10 lg:gap-6 items-center min-h-screen">
@@ -368,6 +400,18 @@ const App = () => {
                 <CTA>Agendar consulta</CTA>
                 <CTA href="#sobre" variant="ghost">Conheça a Dra. Ana</CTA>
               </motion.div>
+
+              <motion.ul
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: t + 1.9 }}
+                aria-label="Em resumo"
+                className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-[11px] uppercase tracking-[0.2em] text-deep/60"
+              >
+                {['Presencial em BH', 'Consulta online', '1ª consulta de ~60 min'].map((c) => (
+                  <li key={c} className="flex items-center gap-3"><span className="text-gold">◆</span>{c}</li>
+                ))}
+              </motion.ul>
             </div>
 
             <motion.div
@@ -403,6 +447,9 @@ const App = () => {
             ))}
           </div>
         </div>
+
+        {/* 2b. CHECK-IN emocional (diferencial: interativo e leva direto ao WhatsApp) */}
+        <CheckIn />
 
         {/* 3. SOBRE */}
         <section id="sobre" className="relative py-28 md:py-40">
@@ -453,6 +500,45 @@ const App = () => {
               className="mt-2 font-display text-3xl md:text-5xl lg:text-[3.4rem] leading-[1.25] font-normal text-deep text-balance"
             />
             <div className="hairline mx-auto mt-14 w-40" />
+          </div>
+        </section>
+
+        {/* 4b. SINAIS (seção escura: quebra o ritmo claro e responde a busca de quem ainda está em dúvida) */}
+        <section id="sinais" className="relative overflow-hidden bg-deep py-28 text-cream md:py-40">
+          <div aria-hidden="true" className="orb-pulse pointer-events-none absolute -right-40 top-10 h-[34rem] w-[34rem] rounded-full bg-gradient-to-br from-gold/30 via-gold/10 to-transparent" style={{ '--s0': 0.9, '--s1': 1.08, opacity: 0.7 }} />
+          <div className="relative mx-auto grid max-w-6xl gap-14 px-6 lg:grid-cols-12 lg:gap-20">
+            <div className="lg:col-span-5">
+              <div className="lg:sticky lg:top-32">
+                <Reveal>
+                  <div className="flex items-center gap-4">
+                    <span className="h-px w-10 bg-gold-soft" />
+                    <span className="text-[11px] font-medium uppercase tracking-[0.3em] text-gold-soft">Sinais</span>
+                  </div>
+                  <h2 className="font-display mt-6 text-5xl leading-[1] tracking-tight md:text-7xl">
+                    Quando é hora de <span className="italic text-gold-soft">pedir ajuda?</span>
+                  </h2>
+                  <p className="mt-8 max-w-sm text-lg font-light leading-relaxed text-cream/70">
+                    Se você se reconhece em alguns destes sinais, por semanas, vale conversar com uma médica. Pedir ajuda cedo costuma tornar o caminho mais leve.
+                  </p>
+                  <div className="mt-10"><CTA variant="light">Conversar com a Dra. Ana</CTA></div>
+                </Reveal>
+              </div>
+            </div>
+            <ul className="lg:col-span-7">
+              {SIGNS.map((text, i) => (
+                <motion.li
+                  key={text}
+                  initial={{ opacity: 0, x: 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.9, delay: i * 0.05, ease }}
+                  className="group flex items-start gap-6 border-t border-cream/15 py-8 transition-colors duration-500 last:border-b hover:border-gold md:gap-10 md:py-10"
+                >
+                  <span className="font-display text-3xl italic text-gold-soft/70 transition-colors duration-500 group-hover:text-gold-soft md:text-4xl">0{i + 1}</span>
+                  <p className="font-display text-2xl leading-snug text-cream/90 transition-transform duration-500 group-hover:translate-x-2 md:text-3xl">{text}</p>
+                </motion.li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -548,15 +634,9 @@ const App = () => {
               </h2>
             </Reveal>
             <div className="border-t border-deep/12">
-              <Accordion title="Como funciona o atendimento médico em saúde mental?">
-                É uma consulta médica focada na sua saúde emocional. Avaliamos sintomas físicos e mentais para propor um plano de cuidado integral, com protocolos modernos e uma abordagem profundamente humana.
-              </Accordion>
-              <Accordion title="Quanto tempo dura a primeira consulta?">
-                A consulta inicial é extensa e meticulosa (cerca de 60 minutos), permitindo uma compreensão profunda do seu histórico familiar, de vida e de suas necessidades atuais, sem pressa.
-              </Accordion>
-              <Accordion title="O atendimento online é seguro e eficaz?">
-                Sim. Utilizamos plataformas seguras e éticas, seguindo as normas do Conselho Federal de Medicina. A telemedicina tem demonstrado eficácia clínica comparável ao atendimento presencial em psiquiatria.
-              </Accordion>
+              {FAQ.map((f, i) => (
+                <Accordion key={f.q} id={i} title={f.q}>{f.a}</Accordion>
+              ))}
             </div>
           </div>
         </section>
@@ -574,34 +654,60 @@ const App = () => {
               </div>
             </Reveal>
 
-            <div className="hairline mt-28 mb-14" />
+            <Reveal className="mx-auto mt-24 grid max-w-4xl gap-px border border-deep/10 bg-deep/10 md:grid-cols-2">
+              {[
+                ['Presencial', `${SITE.city}, ${SITE.region}`, 'Atendimento em ambiente acolhedor e reservado. Fale pelo WhatsApp para combinar dia e horário.'],
+                ['Online', 'Por vídeo, onde você estiver', 'Mesma escuta e o mesmo rigor do presencial, em plataforma segura e conforme as normas do CFM.'],
+              ].map(([title, place, d]) => (
+                <div key={title} className="bg-cream/90 p-8 md:p-10">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-[#8A6A2E]">{title}</p>
+                  <h3 className="mt-3 font-display text-3xl leading-tight md:text-4xl">{place}</h3>
+                  <p className="mt-3 text-sm font-light leading-relaxed text-deep/65">{d}</p>
+                </div>
+              ))}
+            </Reveal>
 
-            <div className="grid md:grid-cols-3 gap-10 items-start">
+            <div className="hairline mt-24 mb-14" />
+
+            <div className="grid md:grid-cols-4 gap-10 items-start">
               <div className="flex items-center gap-4">
-                <img src={Logo} alt="Logo" className="h-14 w-14 rounded-full object-cover ring-1 ring-gold/50" />
+                <img src={Logo} alt="" loading="lazy" width="56" height="56" className="h-14 w-14 rounded-full object-cover ring-1 ring-gold/50" />
                 <div>
                   <p className="font-display text-2xl">Dra. Ana Flávia Ribeiro</p>
                   <p className="text-[10px] uppercase tracking-[0.3em] text-[#8A6A2E]">Saúde Mental</p>
                 </div>
               </div>
+              <nav aria-label="Rodapé">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-deep/50 mb-3">Navegar</p>
+                <ul className="space-y-1.5">
+                  {links.map((l) => (
+                    <li key={l.href}><a href={l.href} className="font-display text-xl text-deep/80 hover:text-gold transition-colors">{l.label}</a></li>
+                  ))}
+                </ul>
+              </nav>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-deep/50 mb-3">Contato</p>
-                <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="font-display text-3xl hover:text-gold transition-colors">(31) 99444-2774</a>
+                <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="font-display text-3xl hover:text-gold transition-colors">{SITE.phoneDisplay}</a>
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-deep/50 mb-3">Instagram</p>
-                <a href="https://www.instagram.com/dra.ana.ribeiro" target="_blank" rel="noopener noreferrer" className="font-display text-3xl hover:text-gold transition-colors">@dra.ana.ribeiro</a>
+                <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="font-display text-3xl hover:text-gold transition-colors">{SITE.instagramHandle}</a>
               </div>
             </div>
 
+            <p className="mt-14 max-w-2xl text-xs font-light leading-relaxed text-deep/55">
+              Este site tem caráter informativo e não substitui consulta médica. Em situação de urgência ou risco, ligue para o SAMU (192), procure o pronto-socorro mais próximo ou fale com o CVV (188, 24 horas, gratuito).
+            </p>
+
             <div className="mt-16 pt-8 border-t border-deep/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-deep/50">
-              <p>© {new Date().getFullYear()} · Dra. Ana Flávia Ribeiro · CRM-MG 104082</p>
+              <p>© {new Date().getFullYear()} · {SITE.name} · {SITE.crm}</p>
               <p>Design por Raphael Yankous</p>
             </div>
           </div>
         </footer>
       </main>
     </div>
+    </MotionConfig>
   );
 };
 

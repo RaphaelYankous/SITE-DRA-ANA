@@ -1,0 +1,14 @@
+{
+  "name": "Dra. Ana Flávia Ribeiro",
+  "short_name": "Dra. Ana Flávia",
+  "description": "Médica em saúde mental em Belo Horizonte e online.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#FBF8F2",
+  "theme_color": "#FBF8F2",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/favicon.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

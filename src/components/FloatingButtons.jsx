@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { WHATSAPP } from '../data/site';
 
 const WAIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-7 h-7">
@@ -13,7 +14,7 @@ export const FloatingButtons = () => {
 
   useEffect(() => {
     const fn = () => setShowTop(window.scrollY > 400);
-    window.addEventListener('scroll', fn);
+    window.addEventListener('scroll', fn, { passive: true });
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
@@ -21,13 +22,13 @@ export const FloatingButtons = () => {
     <>
       {/* WhatsApp */}
       <motion.a
-        href="https://wa.me/553199442774"
+        href={WHATSAPP}
         target="_blank"
         rel="noopener noreferrer"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 1.5, type: 'spring' }}
-        aria-label="WhatsApp"
+        aria-label="Agendar pelo WhatsApp"
         className="fixed bottom-8 right-8 z-50 w-16 h-16 rounded-full bg-[#25D366] flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
       >
         <WAIcon />

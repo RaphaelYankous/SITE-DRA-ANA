@@ -24,6 +24,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 ::selection {
   background: var(--color-gold-soft);
   color: var(--color-deep);
@@ -88,8 +94,8 @@ body {
 }
 
 @keyframes orb {
-  0%, 100% { transform: scale(var(--s0, 0.9)); opacity: var(--o0, 0.4); }
-  50% { transform: scale(var(--s1, 1.05)); opacity: var(--o1, 0.6); }
+  0%, 100% { transform: scale(var(--s0, 0.9)); }
+  50% { transform: scale(var(--s1, 1.05)); }
 }
 
 .spin-slow {

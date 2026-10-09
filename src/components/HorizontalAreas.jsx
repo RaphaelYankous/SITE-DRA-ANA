@@ -34,7 +34,7 @@ const Orb = ({ className, delay = 0 }) => (
       <span
         key={i}
         aria-hidden="true"
-        style={{ '--s0': s * 0.9, '--s1': s * 1.05, '--o0': 0.35 + i * 0.2, '--o1': 0.55 + i * 0.2, animationDelay: `${-(delay + i * 0.4)}s` }}
+        style={{ '--s0': s * 0.9, '--s1': s * 1.05, opacity: 0.4 + i * 0.2, animationDelay: `${-(delay + i * 0.4)}s` }}
         className={`orb-pulse absolute inset-0 rounded-full bg-gradient-to-br ${className}`}
       />
     ))}

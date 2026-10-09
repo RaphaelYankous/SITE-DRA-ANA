@@ -42,14 +42,14 @@ export const Breathe = () => {
             aria-hidden="true"
             animate={running ? { scale: current.scale + i * 0.18, opacity: 0.5 - i * 0.12 } : undefined}
             transition={{ duration: current.seconds, ease: 'easeInOut' }}
-            style={running ? undefined : { '--s0': 1 + i * 0.18, '--s1': 1.2 + i * 0.18, '--o0': 0.4 - i * 0.1, '--o1': 0.4 - i * 0.1, animationDelay: `${-i * 0.25}s`, animationDuration: '8s' }}
+            style={running ? undefined : { '--s0': 1 + i * 0.18, '--s1': 1.2 + i * 0.18, opacity: 0.4 - i * 0.1, animationDelay: `${-i * 0.25}s`, animationDuration: '8s' }}
             className={`${running ? '' : 'orb-pulse'} absolute h-[200px] w-[200px] md:h-[270px] md:w-[270px] rounded-full bg-gradient-to-br from-gold-soft to-sage/50`}
           />
         ))}
         <motion.div
           animate={running ? { scale: current.scale } : undefined}
           transition={{ duration: current.seconds, ease: 'easeInOut' }}
-          style={running ? undefined : { '--s0': 1, '--s1': 1.12, '--o0': 1, '--o1': 1, animationDuration: '8s' }}
+          style={running ? undefined : { '--s0': 1, '--s1': 1.12, animationDuration: '8s' }}
           className={`${running ? '' : 'orb-pulse'} relative flex h-[200px] w-[200px] md:h-[270px] md:w-[270px] flex-col items-center justify-center rounded-full bg-cream/90 shadow-[0_20px_60px_-20px_rgba(184,146,74,0.6)] ring-1 ring-gold/50`}
         >
           <span className="font-display text-4xl md:text-5xl text-deep">{running ? current.label : 'Respire'}</span>

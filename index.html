@@ -2,49 +2,63 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <title>Dra. Ana Flávia Ribeiro | Médica – Saúde Mental</title>
-    <meta name="description" content="Atendimento médico humanizado focado em saúde mental, equilíbrio emocional e bem-estar. Consultas presenciais em Belo Horizonte e online." />
-    <meta name="keywords" content="saúde mental, médica, ansiedade, burnout, depressão, Belo Horizonte, telemedicina" />
+
+    <title>Dra. Ana Flávia Ribeiro | Médica em Saúde Mental · Belo Horizonte e Online</title>
+    <meta name="description" content="Médica com atuação em saúde mental em Belo Horizonte e online: ansiedade, humor e burnout. Consulta de cerca de 60 minutos, escuta cuidadosa e acompanhamento contínuo. Agende pelo WhatsApp." />
     <meta name="author" content="Raphael Yankous" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <link rel="canonical" href="%SITE_URL%/" />
 
+    <!-- Local SEO -->
+    <meta name="geo.region" content="BR-MG" />
+    <meta name="geo.placename" content="Belo Horizonte" />
+    <link rel="alternate" hreflang="pt-BR" href="%SITE_URL%/" />
+    <link rel="alternate" hreflang="x-default" href="%SITE_URL%/" />
+
+    <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dra. Ana Flávia Ribeiro" />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:title" content="Dra. Ana Flávia Ribeiro | Médica – Saúde Mental" />
-    <meta property="og:description" content="Atendimento médico humanizado em saúde mental. Consultas presenciais em Belo Horizonte e online." />
-    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:title" content="Dra. Ana Flávia Ribeiro | Médica em Saúde Mental" />
+    <meta property="og:description" content="Escuta cuidadosa e acompanhamento médico para ansiedade, humor e burnout. Presencial em Belo Horizonte e online." />
+    <meta property="og:image" content="%SITE_URL%/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Dra. Ana Flávia Ribeiro, médica em saúde mental" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dra. Ana Flávia Ribeiro | Médica em Saúde Mental" />
+    <meta name="twitter:description" content="Presencial em Belo Horizonte e online. Agende sua consulta." />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.jpg" />
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Physician",
-      "name": "Dra. Ana Flávia Ribeiro",
-      "description": "Médica com atuação em saúde mental: ansiedade, humor e burnout. Atendimento presencial e online.",
-      "medicalSpecialty": "Psychiatry",
-      "telephone": "+55-31-99444-2774",
-      "areaServed": "Belo Horizonte, MG",
-      "sameAs": ["https://www.instagram.com/dra.ana.ribeiro"]
-    }
-    </script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <!-- Ícones -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#FBF8F2" />
+    <meta name="color-scheme" content="light" />
+
+    <!--JSON-LD-->
+
+    <!-- Fontes: só os pesos usados -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
 
     <style>
-      body {
-        margin: 0;
-        font-family: 'Inter', sans-serif;
-        background-color: #FBF8F2;
-      }
+      body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background-color: #FBF8F2; color: #1F2E27; }
+      .skip-link { position: absolute; left: 1rem; top: -4rem; z-index: 10000; background: #1F2E27; color: #FBF8F2; padding: .75rem 1.25rem; border-radius: 999px; font-size: .8rem; letter-spacing: .1em; text-decoration: none; transition: top .2s; }
+      .skip-link:focus { top: 1rem; }
+      #ssr { max-width: 42rem; margin: 0 auto; padding: 4rem 1.5rem; line-height: 1.6; visibility: hidden; }
     </style>
+    <noscript><style>#ssr { visibility: visible; }</style></noscript>
   </head>
   <body>
-    <div id="root"></div>
+    <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+    <div id="root"><div id="ssr"><!--STATIC-CONTENT--></div></div>
+    <noscript>Para ver este site com todas as animações, ative o JavaScript. Para agendar, chame no WhatsApp: (31) 99444-2774.</noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
